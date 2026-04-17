@@ -50,19 +50,18 @@ The original demo already showed the idea of a procurement workflow, but it did 
 ```python
 total = unit_price * quantity
 Example
-
 For the request:
 
 Order 30 laptops for the sales team
 
-the system extracts:
+  the system extracts:
 
-quantity = 30
-category = laptops
+       quantity = 30
+       category = laptops
 
 Then it retrieves pricing for the available vendors and calculates total price per vendor.
 
-Why this matters
+#Why this matters
 
 This removes the hardcoded quantity and makes the workflow respond to the actual purchase request.
 
@@ -76,15 +75,15 @@ After compare_quotes, I added a routing function using LangGraph conditional edg
 
 The routing checks:
 
-if best_quote["total"] > 10000 → go to request_approval
-otherwise → skip approval and go directly to submit_purchase_order
+  if best_quote["total"] > 10000 → go to request_approval
+  otherwise → skip approval and go directly to submit_purchase_order
 
 Why this matters
 
 This reflects a more realistic business rule:
 
-smaller purchases can be processed automatically
-larger purchases need manager approval
+    smaller purchases can be processed automatically
+     larger purchases need manager approval
 
 Result
 
@@ -227,26 +226,33 @@ This demonstrates a proper human-in-the-loop workflow using LangGraph interrupts
 
 Technologies Used
 Python
-LangGraph
-LangChain
-Gemini via langchain-google-genai
-SQLite checkpointing
-DummyJSON API
+ LangGraph
+  LangChain
+   Gemini via langchain-google-genai
+     SQLite checkpointing
+        DummyJSON API
+
 How to Run
 1. Create and activate a virtual environment
 macOS / Linux
 python3 -m venv venv
 source venv/bin/activate
+
 2. Install dependencies
 pip install -U langgraph langchain langchain-google-genai langgraph-checkpoint-sqlite
+
 3. Set API key
 export GOOGLE_API_KEY="your_api_key_here"
+
 4. Run the workflow
 python demo8.1-purchase-agent.py
+
 5. Resume after approval interrupt
 python demo8.1-purchase-agent.py --resume
+
 6. Test rejection path
 python demo8.1-purchase-agent.py --resume "Rejected — over budget"
+
 Example Run Summary
 
 Example request
@@ -263,7 +269,8 @@ best quote is selected
 approval is requested because total exceeds €10,000
 after approval, PO is created
 after rejection, PO is skipped and employee is notified
-What I Learned
+
+#What I Learned
 
 Through this homework I learned how to:
 
@@ -277,13 +284,3 @@ design cleaner approval and rejection outcomes
 
 This assignment helped me understand how agent workflows can be used for practical procurement automation.
 
-Possible Future Extension
-
-A natural next step would be the bonus task:
-
-onboarding kit requests
-multiple item categories such as laptops and smartphones
-parallel quote lookups
-combined total for approval decision
-
-This would make the procurement agent even closer to a real enterprise purchasing workflow.
